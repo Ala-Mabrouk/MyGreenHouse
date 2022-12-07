@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_greenhouse/HouseControlScreen.dart';
 
 import 'package:my_greenhouse/homepage.dart';
 
@@ -17,8 +18,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter  Home Page'),
+      home: MyHomePage(
+        title: 'My Green house',
+      ),
     );
   }
 }

@@ -1,14 +1,16 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 
 class MqttDataHouseManager {
   var pongCount = 0; // Pong counter
-
+  var rng = Random();
   MqttServerClient client = MqttServerClient('broker.hivemq.com', '');
 
   Future<int> connect() async {
+    int id = rng.nextInt(1000);
     client.logging(on: true);
     client.keepAlivePeriod = 10;
     client.onConnected = onConnected;
@@ -17,7 +19,7 @@ class MqttDataHouseManager {
     client.pongCallback = pong;
 
     final connMessage = MqttConnectMessage()
-        .withClientIdentifier("clientIdentifier")
+        .withClientIdentifier("clientIdentifier_$id")
         .withWillTopic('willtopic')
         .withWillMessage('willMessage')
         .startClean()
@@ -91,6 +93,9 @@ class MqttDataHouseManager {
   }
 
   void publishMessage(String topic, String message) {
+    //tpoic: ISIariana/2ING2/my_GreenHouse/Controllers
+    //message:1|0
+    print("sending message to $topic");
     final builder = MqttClientPayloadBuilder();
     builder.addString(message);
     client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload!);

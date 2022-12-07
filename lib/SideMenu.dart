@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_greenhouse/HouseControlScreen.dart';
+import 'package:my_greenhouse/homepage.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -34,9 +36,30 @@ class SideMenu extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Home page'),
+            onTap: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const MyHomePage(
+                    title: 'My green house',
+                  ),
+                ),
+                (route) => false,
+              );
+            },
+          ),
+          const Divider(),
+          ListTile(
             leading: const Icon(Icons.settings),
             title: const Text('Control Green_House'),
-            onTap: () => null,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HouseControl()));
+            },
           ),
           const ListTile(
             leading: Icon(Icons.notifications),
