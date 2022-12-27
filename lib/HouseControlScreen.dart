@@ -45,12 +45,14 @@ class _HouseControlState extends State<HouseControl> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
 
+    final scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: scaffoldKey,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Scaffold.of(context).openDrawer();
+              scaffoldKey.currentState!.openDrawer();
             },
             icon: const Icon(Icons.menu)),
         bottomOpacity: 0.8,
@@ -162,7 +164,8 @@ class _HouseControlState extends State<HouseControl> {
                                     color: Colors.grey[400],
                                   ),
                                   onPressed: () {
-                                    displayInfo("message");
+                                    displayInfo(
+                                        "open or close the water vans in the green housse");
                                   },
                                 ),
                               ],
@@ -224,7 +227,8 @@ class _HouseControlState extends State<HouseControl> {
                                     color: Colors.grey[400],
                                   ),
                                   onPressed: () {
-                                    displayInfo("message");
+                                    displayInfo(
+                                        "open or close the Ultra Violt light in the green house");
                                   },
                                 ),
                               ],
@@ -274,7 +278,8 @@ class _HouseControlState extends State<HouseControl> {
                                     color: Color.fromARGB(240, 95, 140, 78),
                                   ),
                                   onPressed: () {
-                                    displayInfo("message");
+                                    displayInfo(
+                                        "making a call to +216 ** *** ***");
                                   },
                                 ),
                                 IconButton(
@@ -283,7 +288,8 @@ class _HouseControlState extends State<HouseControl> {
                                     color: Colors.grey[400],
                                   ),
                                   onPressed: () {
-                                    displayInfo("message");
+                                    displayInfo(
+                                        "make a call to the responsable / gard of the green house");
                                   },
                                 ),
                               ],

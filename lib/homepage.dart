@@ -25,12 +25,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: scaffoldKey,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Scaffold.of(context).openDrawer();
+              scaffoldKey.currentState!.openDrawer();
             },
             icon: const Icon(Icons.menu)),
         bottomOpacity: 0.8,

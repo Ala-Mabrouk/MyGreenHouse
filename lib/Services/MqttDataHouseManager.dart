@@ -99,6 +99,7 @@ class MqttDataHouseManager {
     final builder = MqttClientPayloadBuilder();
     builder.addString(message);
     client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload!);
+    print("******       request send with sucssess !!");
   }
 
   Stream<List<MqttReceivedMessage<MqttMessage>>>? getMessagesStream() {
