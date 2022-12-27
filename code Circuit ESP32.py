@@ -70,11 +70,16 @@ lightValue="true"
 prev_Data = ""
 prev_waterOn=""
 prev_Light=""
-
+strLight="ON"
+strWater="ON"
 # here we will treat all the comming info from user (light / run water)
 def sub_cb(topic, msg):
   global prev_waterOn
   global prev_Light 
+  global strLight 
+  global strWater 
+  global lightValue
+  global waterOn
   res=msg.decode('UTF-8')# res= "water value|light value"
   info=res.split("|")# decomposing res 
   print(info)
@@ -83,10 +88,12 @@ def sub_cb(topic, msg):
   # water control
   if waterOn != prev_waterOn:
     if(waterOn=="true"):
+      strWater="ON"
       for position in range(9000,1000,-50):
           pwm.duty_u16(position)
           sleep(0.01)      
     if(waterOn=="false"):
+      strWater="OFF"
       for position in range(1000,9000,50):
           pwm.duty_u16(position)
           sleep(0.01)
@@ -95,11 +102,18 @@ def sub_cb(topic, msg):
  # light control
   if(lightValue!=prev_Light):
     if(lightValue=="false"):
+      strLight="OFF"
       led.value(0)
     if(lightValue=="true"):
+      strLight="ON"
       led.value(1);
     prev_Light=lightValue   
-   
+
+  lcd.clear()
+  lcd.putstr("my green house info:")
+  lcd.putstr( "t: "+ str(sensor.temperature())+" H: "+str(sensor.humidity())+"     ") 
+  lcd.putstr( "Light: "+strLight+"           " ) 
+  lcd.putstr( "Water Van: "+strWater ) 
 
 
 # connection to wifi
@@ -139,17 +153,20 @@ while True:
     "t": sensor.temperature(),
     "h": sensor.humidity(),
     "l": lightValue,
-    #"w": waterOn
+    "w": waterOn
   })
   
   if message != prev_Data:
-    lcd.clear()
-    lcd.putstr("my green house info:")
-    lcd.putstr( "t: "+ str(sensor.temperature()))
     print("Updated!")
     print("Reporting to MQTT topic {}: {}".format(MQTT_TOPIC, message))
     client.publish(MQTT_TOPIC, message)
     prev_Data = message
+    lcd.clear()
+    lcd.putstr("my green house info:")
+    lcd.putstr( "t: "+ str(sensor.temperature())+" H: "+str(sensor.humidity())+"     ") 
+    lcd.putstr( "Light: "+strLight+"           " ) 
+    lcd.putstr( "Water Van: "+strWater ) 
+
   else:
     print("No change")
   time.sleep(1)
