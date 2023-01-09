@@ -32,12 +32,7 @@ class BaseInfo extends StatelessWidget {
             final recMess = c[0].payload as MqttPublishMessage;
             final pt = MqttPublishPayload.bytesToStringAsString(
                 recMess.payload.message);
-
-            List<String> myres = pt.split(",");
-            String temp = myres[1].substring(myres[1].indexOf(":") + 1);
-            String hum = myres[2].substring(myres[2].indexOf(":") + 1);
-            String light = myres[3].substring(
-                myres[1].indexOf(":") + 1, myres[3].lastIndexOf("}"));
+            Map info = mqttClientManager.getsimpleInfo(pt);
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +45,7 @@ class BaseInfo extends StatelessWidget {
                       color: Kgray,
                     ),
                     Text(
-                      " $temp °C",
+                      info['temp'] + "°C",
                       style: GoogleFonts.lato(
                           fontSize: 65,
                           fontWeight: FontWeight.w300,
@@ -66,7 +61,7 @@ class BaseInfo extends StatelessWidget {
                     const Icon(Icons.water_drop_outlined,
                         size: 60, color: Kgray),
                     Text(
-                      " $hum %",
+                      info['hum'] + " %",
                       style: GoogleFonts.lato(
                         fontSize: 65,
                         fontWeight: FontWeight.w300,
@@ -86,7 +81,7 @@ class BaseInfo extends StatelessWidget {
                       color: Kgray,
                     ),
                     Text(
-                      (light.contains("true")) ? " Active" : " Close",
+                      (info['light'].contains("true")) ? " Active" : " Close",
                       style: GoogleFonts.lato(
                         fontSize: 60,
                         fontWeight: FontWeight.w300,

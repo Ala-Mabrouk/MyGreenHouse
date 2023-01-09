@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
         foregroundColor: Colors.black38,
       ),
       drawer: const SideMenu(),
-      body: Container(
+      body: Expanded(
           child: Stack(children: [
         Image.asset(
           "assets/image4.jpeg",

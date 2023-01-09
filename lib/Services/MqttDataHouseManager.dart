@@ -12,7 +12,7 @@ class MqttDataHouseManager {
   Future<int> connect() async {
     int id = rng.nextInt(1000);
     client.logging(on: true);
-    client.keepAlivePeriod = 10;
+    client.keepAlivePeriod = 5;
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;
     client.onSubscribed = onSubscribed;
@@ -104,5 +104,21 @@ class MqttDataHouseManager {
 
   Stream<List<MqttReceivedMessage<MqttMessage>>>? getMessagesStream() {
     return client.updates;
+  }
+
+  // manipulate res mqtt to known data
+  Map getsimpleInfo(String infoFromMqtt) {
+    Map res = new Map();
+    List<String> myres = infoFromMqtt.split(",");
+    res["temp"] = myres[1].substring(myres[1].indexOf(":") + 1);
+    res["hum"] = myres[2].substring(myres[2].indexOf(":") + 1);
+    res["light"] = myres[3]
+        .substring(myres[1].indexOf(":") + 1, myres[3].lastIndexOf("}"));
+    res["water"] = myres[0].substring(myres[0].indexOf(":") + 1);
+    print("*********\n");
+    print(res);
+    print("*********\n");
+
+    return res;
   }
 }

@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mqtt_client/mqtt_client.dart';
 import 'package:my_greenhouse/InfoBulle.dart';
 import 'package:my_greenhouse/Services/MqttDataHouseManager.dart';
 import 'package:my_greenhouse/SideMenu.dart';
-import 'package:my_greenhouse/loading.dart';
-
-import 'Constants.dart';
 
 class HouseControl extends StatefulWidget {
   const HouseControl({super.key});
@@ -22,8 +18,10 @@ class _HouseControlState extends State<HouseControl> {
   bool water = true;
   MqttDataHouseManager mqttClientManager = MqttDataHouseManager();
   String publishTopic = "ISIariana/2ING2/my_GreenHouse/Controllers";
+  String listenTopic = "ISIariana/2ING2/my_GreenHouse/sensors";
   Future<void> setupMqttClient() async {
     await mqttClientManager.connect();
+    mqttClientManager.subscribe(listenTopic);
   }
 
   @override
@@ -33,18 +31,28 @@ class _HouseControlState extends State<HouseControl> {
     super.initState();
   }
 
+  void displayInfo(String msg) {
+    final snackBar = SnackBar(
+      content: Text('$msg'),
+      backgroundColor: const Color.fromARGB(240, 185, 205, 152),
+      behavior: SnackBarBehavior.floating,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  Future<Map> getInfoFromMqtt() async {
+    var res = await mqttClientManager.getMessagesStream()?.first.then((value) {
+      final recMess = value[0].payload as MqttPublishMessage;
+      final pt =
+          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      return pt;
+    });
+    return mqttClientManager.getsimpleInfo(res as String);
+  }
+
   @override
   Widget build(BuildContext context) {
-    void displayInfo(String msg) {
-      final snackBar = SnackBar(
-        content: Text('$msg'),
-        backgroundColor: Color.fromARGB(240, 185, 205, 152),
-        behavior: SnackBarBehavior.floating,
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
-
     final scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: scaffoldKey,
@@ -60,7 +68,7 @@ class _HouseControlState extends State<HouseControl> {
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black38,
       ),
-      drawer: SideMenu(),
+      drawer: const SideMenu(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -82,24 +90,76 @@ class _HouseControlState extends State<HouseControl> {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    InfoBulle(
-                      myIcon: Icons.thermostat,
-                      textInfo: '25' + '°C',
-                    ),
-                    InfoBulle(
-                      myIcon: Icons.water_drop_outlined,
-                      textInfo: '25' + '%',
-                    ),
-                    InfoBulle(
-                      myIcon: Icons.light_outlined,
-                      textInfo: 'Active',
-                    ),
-                  ],
-                ),
+                // child: FutureBuilder(
+                //     future: getInfoFromMqtt(),
+                //     builder: (context, snapshot) {
+                //       if (snapshot.hasData) {
+                //         Map infoGreenHouse = snapshot.data as Map;
+                //         return Row(
+                //           crossAxisAlignment: CrossAxisAlignment.center,
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             InfoBulle(
+                //               myIcon: Icons.thermostat,
+                //               textInfo: infoGreenHouse['temp'] + "°C",
+                //             ),
+                //             InfoBulle(
+                //               myIcon: Icons.water_drop_outlined,
+                //               textInfo: infoGreenHouse['hum'] + " %",
+                //             ),
+                //             InfoBulle(
+                //               myIcon: Icons.light_outlined,
+                //               textInfo:
+                //                   (infoGreenHouse['light'].contains("true"))
+                //                       ? " Active"
+                //                       : " Close",
+                //             ),
+                //           ],
+                //         );
+                //       }
+                //       return const Center(
+                //         child: SpinKitRipple(
+                //           color: Colors.green,
+                //           size: 250.0,
+                //           duration: Duration(milliseconds: 1500),
+                //         ),
+                //       );
+                //     }),
+                child: StreamBuilder(
+                    stream: mqttClientManager.getMessagesStream(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        var c = snapshot.data
+                            as List<MqttReceivedMessage<MqttMessage?>>;
+                        final recMess = c[0].payload as MqttPublishMessage;
+                        final pt = MqttPublishPayload.bytesToStringAsString(
+                            recMess.payload.message);
+                        Map info = mqttClientManager.getsimpleInfo(pt);
+                        print(info);
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InfoBulle(
+                              myIcon: Icons.thermostat,
+                              textInfo: info['temp'] + "°C",
+                            ),
+                            InfoBulle(
+                              myIcon: Icons.water_drop_outlined,
+                              textInfo: info['hum'] + " %",
+                            ),
+                            InfoBulle(
+                              myIcon: Icons.light_outlined,
+                              textInfo: (info['light'].contains("true"))
+                                  ? " Active"
+                                  : " Close",
+                            ),
+                          ],
+                        );
+                      }
+
+                      return Container();
+                    }),
               ),
               const Divider(
                 height: 60,
@@ -116,12 +176,12 @@ class _HouseControlState extends State<HouseControl> {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(240, 242, 242, 242),
+                        color: const Color.fromARGB(240, 242, 242, 242),
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
                               color: Colors.grey.withOpacity(0.1),
-                              offset: Offset(0, 10),
+                              offset: const Offset(0, 10),
                               blurRadius: 7,
                               spreadRadius: -5)
                         ],
@@ -179,12 +239,12 @@ class _HouseControlState extends State<HouseControl> {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(240, 242, 242, 242),
+                        color: const Color.fromARGB(240, 242, 242, 242),
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
                               color: Colors.grey.withOpacity(0.1),
-                              offset: Offset(0, 10),
+                              offset: const Offset(0, 10),
                               blurRadius: 7,
                               spreadRadius: -5)
                         ],
@@ -242,12 +302,12 @@ class _HouseControlState extends State<HouseControl> {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(240, 242, 242, 242),
+                        color: const Color.fromARGB(240, 242, 242, 242),
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
                               color: Colors.grey.withOpacity(0.1),
-                              offset: Offset(0, 10),
+                              offset: const Offset(0, 10),
                               blurRadius: 7,
                               spreadRadius: -5)
                         ],
