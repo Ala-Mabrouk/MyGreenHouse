@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_greenhouse/HouseControlScreen.dart';
 import 'package:my_greenhouse/homepage.dart';
 
+import 'login.dart';
+
 class SideMenu extends StatelessWidget {
   const SideMenu({
     Key? key,
@@ -9,6 +11,45 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future logOut() {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Center(child: Text('Deconnexion')),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: const <Widget>[
+                  Text('Vous êtes sur le point de vous déconnecter ?'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                  child: const Text('Annuler'),
+                  onPressed: () {
+                    print('alert dissmiss');
+                    Navigator.pop(context);
+                  }),
+              TextButton(
+                child: const Text('Déconnecter'),
+                onPressed: () async {
+                  print('you are loged out !!!');
+                  //  await AuthService().logout();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => signIn()),
+                      (route) => false);
+                  //(context,MaterialPageRoute(builder: (context) => const signIn()));
+                },
+              )
+            ],
+          );
+        },
+      );
+    }
+
     return Drawer(
       child: ListView(
         // Remove padding
@@ -80,7 +121,7 @@ class SideMenu extends StatelessWidget {
           ListTile(
             title: const Text('Log out'),
             leading: const Icon(Icons.exit_to_app),
-            onTap: () => null,
+            onTap: () => logOut(),
           ),
         ],
       ),

@@ -35,6 +35,7 @@ class AuthService {
         //_user = await UserServices().getUserInfo(result.user!.uid);
         return new UserApp();
       }
+      return null;
     } on FirebaseAuthException catch (e) {
       rethrow;
     }
