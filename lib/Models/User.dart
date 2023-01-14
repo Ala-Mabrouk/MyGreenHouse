@@ -1,13 +1,14 @@
 class UserApp {
-  String userUID = '';
-  String userName = '';
-  String userLastName = '';
+  String userUID = '0';
+  String userName = 'foulen';
+  String userLastName = 'ben foulen';
   String userAvatar =
-      'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png'; //url to img in the firebase storage
-  String userMail = '';
-  String userPass = '';
-  String userPhone = '';
-  String userDateNaissance = '';
+      'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png'; //url to img in the firebase storage
+  String userCoverImg='http://cdn.shopify.com/s/files/1/0200/5036/products/Greenhouse_1200x630.jpg?v=1505284719';
+  String userMail = 'bf.foulen@mail.com';
+  String userPass = '123456789';
+  String userPhone = '+21600000000';
+  String userDateNaissance = '00/00/0000';
   bool userIsSubscribed = false;
 
   UserApp();

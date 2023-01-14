@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_greenhouse/HouseControlScreen.dart';
+import 'package:my_greenhouse/Services/userServices.dart';
 import 'package:my_greenhouse/homepage.dart';
 
+import 'Models/User.dart';
+import 'Services/AuthService.dart';
 import 'login.dart';
 
 class SideMenu extends StatelessWidget {
@@ -21,27 +24,26 @@ class SideMenu extends StatelessWidget {
             content: SingleChildScrollView(
               child: ListBody(
                 children: const <Widget>[
-                  Text('Vous êtes sur le point de vous déconnecter ?'),
+                  Text('you are going to disconnect your session ?'),
                 ],
               ),
             ),
             actions: <Widget>[
               TextButton(
-                  child: const Text('Annuler'),
+                  child: const Text('Dismiss'),
                   onPressed: () {
                     print('alert dissmiss');
                     Navigator.pop(context);
                   }),
               TextButton(
-                child: const Text('Déconnecter'),
-                onPressed: () async {
-                  print('you are loged out !!!');
-                  //  await AuthService().logout();
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => signIn()),
-                      (route) => false);
-                  //(context,MaterialPageRoute(builder: (context) => const signIn()));
+                child: const Text('Logout'),
+                onPressed: () {
+                  AuthService().logout().whenComplete(() =>
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const signIn()),
+                          (route) => false));
                 },
               )
             ],
@@ -50,80 +52,82 @@ class SideMenu extends StatelessWidget {
       );
     }
 
-    return Drawer(
-      child: ListView(
-        // Remove padding
-        padding: EdgeInsets.zero,
-        children: [
-          UserAccountsDrawerHeader(
-            accountName: const Text('Farmer 101'),
-            accountEmail: const Text('farmer101@gmail.com'),
-            currentAccountPicture: CircleAvatar(
-              child: ClipOval(
-                child: Image.network(
-                  'https://www.italianflora.com/wp-content/uploads/2022/08/Depositphotos_250267114_XL_fb.jpg',
-                  fit: BoxFit.cover,
-                  width: 90,
-                  height: 90,
-                ),
-              ),
-            ),
-            decoration: const BoxDecoration(
-              color: Colors.blue,
-              image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(
-                      'https://cdni0.trtworld.com/w960/q75/113740_tunisia_202122_1631174680520.jpg')),
-            ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('Home page'),
-            onTap: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => const MyHomePage(
-                    title: 'My green house',
+    UserApp myUserApp = UserServices().getUserInfo();
+    return SafeArea(
+      child: Drawer(
+        child: ListView(
+          // Remove padding
+          padding: EdgeInsets.zero,
+          children: [
+            UserAccountsDrawerHeader(
+              accountName:   Text('${myUserApp.userName} ${myUserApp.userLastName}'),
+              accountEmail:  Text(myUserApp.userMail),
+              currentAccountPicture: CircleAvatar(
+                child: ClipOval(
+                  child: Image.network(
+                    myUserApp.userAvatar,
+                    fit: BoxFit.cover,
+                    width: 90,
+                    height: 90,
                   ),
                 ),
-                (route) => false,
-              );
-            },
-          ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Control Green_House'),
-            onTap: () {
-              Navigator.push(
+              ),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(myUserApp.userCoverImg)),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Home page'),
+              onTap: () {
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const HouseControl()));
-            },
-          ),
-          const ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text('Request'),
-          ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('My Account'),
-            onTap: () => null,
-          ),
-          ListTile(
-            leading: const Icon(Icons.share),
-            title: const Text('Share'),
-            onTap: () => null,
-          ),
-          const Divider(),
-          ListTile(
-            title: const Text('Log out'),
-            leading: const Icon(Icons.exit_to_app),
-            onTap: () => logOut(),
-          ),
-        ],
+                    builder: (BuildContext context) => const MyHomePage(
+                      title: 'My green house',
+                    ),
+                  ),
+                  (route) => false,
+                );
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Control Green_House'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HouseControl()));
+              },
+            ),
+            const ListTile(
+              leading: Icon(Icons.notifications),
+              title: Text('Request'),
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('My Account'),
+              onTap: () => null,
+            ),
+            ListTile(
+              leading: const Icon(Icons.share),
+              title: const Text('Share'),
+              onTap: () => null,
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text('Log out'),
+              leading: const Icon(Icons.exit_to_app),
+              onTap: () => logOut(),
+            ),
+          ],
+        ),
       ),
     );
   }

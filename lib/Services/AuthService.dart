@@ -5,19 +5,7 @@ import '../Models/User.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
-// sign in anon
-  Future signInAnon() async {
-    try {
-      UserCredential result = await _auth.signInAnonymously();
-      User? user = result.user;
-      return user;
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-
+  
 //sign with e-mail and password
   //signIn with mail
   Future<UserApp?> signInEmailPassword(String mail, String pass) async {
@@ -52,21 +40,6 @@ class AuthService {
       await _user!.sendEmailVerification();
     } on Exception catch (e) {
       print(e);
-    }
-  }
-
-  //update info
-  Future updateUSerInfo(UserApp _user, bool pass) async {
-    try {
-      if (pass) {
-        User? u = _auth.currentUser;
-        await u!.updatePassword(_user.userPass);
-      }
-      // UserServices().updateUser(_user);
-      return _user;
-    } catch (e) {
-      print(e);
-      return null;
     }
   }
 
