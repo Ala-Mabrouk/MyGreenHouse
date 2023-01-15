@@ -1,5 +1,5 @@
 class Humidity {
   final String date;
-  final int hum;
+  final double hum;
   Humidity(this.date, this.hum);
 }

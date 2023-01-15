@@ -4,11 +4,13 @@ import 'package:my_greenhouse/homepage.dart';
 import 'package:my_greenhouse/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Services/GreenHouseMG.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  // await GreenHouseMG().gethistoriqueHum();
+   await GreenHouseMG().gethistoriqueHum();
   runApp(MyApp(isloged: prefs.getString('UserID') != null));
   //runApp(MyWidget());
 }

@@ -6,18 +6,39 @@ import 'package:my_greenhouse/Constants.dart';
 import 'package:my_greenhouse/Services/GreenHouseMG.dart';
 import 'package:my_greenhouse/Services/MqttDataHouseManager.dart';
 
- 
-class BaseInfo extends StatelessWidget {
+class BaseInfo extends StatefulWidget {
   const BaseInfo({
     Key? key,
-    required this.mqttClientManager,
   }) : super(key: key);
 
-  final MqttDataHouseManager mqttClientManager;
+  @override
+  State<BaseInfo> createState() => _BaseInfoState();
+}
+
+class _BaseInfoState extends State<BaseInfo> {
+  MqttDataHouseManager mqttClientManager = MqttDataHouseManager();
+  final String pubTopic = "ISIariana/2ING2/my_GreenHouse/sensors";
+  Future<void> setupMqttClient() async {
+    await mqttClientManager.connect();
+    mqttClientManager.subscribe(pubTopic);
+  }
+
+  @override
+  void dispose() {
+    mqttClientManager.disconnect();
+    super.dispose();
+  }
+ 
+  @override
+  void initState() {
+    print("connecting to hive broker ");
+    setupMqttClient();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Map prevInfo={};
+    Map prevInfo = {"temp":0,"hum":-1};
     return StreamBuilder(
       stream: mqttClientManager.getMessagesStream(),
       builder: (context, snapshot) {
@@ -36,12 +57,11 @@ class BaseInfo extends StatelessWidget {
             final pt = MqttPublishPayload.bytesToStringAsString(
                 recMess.payload.message);
             Map info = mqttClientManager.getsimpleInfo(pt);
-            if(info!=prevInfo){
-               prevInfo=info;
-              String now=DateTime.now().toString().substring(0,16);
+            if (info["temp"] != prevInfo["temp"]||info["hum"] != prevInfo["hum"]) {
+              prevInfo= info;
+              String now = DateTime.now().toString().substring(0, 16);
               //send data to firebase
-             GreenHouseMG().addNewInfo({now:info});
-
+              GreenHouseMG().addNewInfo({now: info});
             }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,8 +119,6 @@ class BaseInfo extends StatelessWidget {
                     ),
                   ],
                 ),
-            
-           
               ],
             );
           }

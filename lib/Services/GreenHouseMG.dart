@@ -19,7 +19,7 @@ class GreenHouseMG {
         if (parsedDate.day == DateTime.now().day) {
           data.add(Temperateur(
               "${parsedDate.hour}:${parsedDate.minute}:${parsedDate.second}",
-              int.parse(value["temp"].toString())));
+              double.parse(value["temp"].toString())));
         }
         return MapEntry(key, value);
       });
@@ -38,7 +38,7 @@ class GreenHouseMG {
         if (parsedDate.day == DateTime.now().day) {
           data.add(Humidity(
               "${parsedDate.hour}:${parsedDate.minute}:${parsedDate.second}",
-              int.parse(value["hum"].toString())));
+              double.parse(value["hum"].toString())));
         }
         return MapEntry(key, value);
       });

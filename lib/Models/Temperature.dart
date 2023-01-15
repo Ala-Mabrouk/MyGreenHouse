@@ -1,5 +1,5 @@
 class Temperateur {
   final String date;
-  final int temp;
+  final double temp;
   Temperateur(this.date, this.temp);
 }
