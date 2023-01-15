@@ -17,3 +17,4 @@ const KPrimaryColor = Color(0xFFFF9F1C);
 const KSecondaryColor = Color(0xFFFFBF68);
 const KRedColor = Color(0xFFd9534f);
 const KGreenColor = Color(0xFF5cb85c);
+const KLightGreen=Color(0xFF3C6255);

@@ -12,16 +12,16 @@ class AuthService {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     try {
-      UserApp _user;
+     
       UserCredential result =
           await _auth.signInWithEmailAndPassword(email: mail, password: pass);
 
       if (result.user != null) {
         prefs.setString('UserID', result.user!.uid);
-        print("result.user!.uid: " + result.user!.uid);
+        print("result.user!.uid: ${result.user!.uid}");
         //get user info from database
         //_user = await UserServices().getUserInfo(result.user!.uid);
-        return new UserApp();
+        return   UserApp();
       }
       return null;
     } on FirebaseAuthException catch (e) {

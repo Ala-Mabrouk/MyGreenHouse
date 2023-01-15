@@ -4,6 +4,8 @@ import 'package:my_greenhouse/Services/MqttDataHouseManager.dart';
 import 'package:my_greenhouse/SideMenu.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'btnHistoStatistics.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -92,6 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                     BaseInfo(mqttClientManager: mqttClientManager),
+                        const SizedBox(
+                  height: 60,
+                ),
+                       const  BtnHistoStatistics()
                   ],
                 ),
               ),

@@ -5,6 +5,7 @@ import 'package:my_greenhouse/Constants.dart';
 import 'package:my_greenhouse/Models/User.dart';
 import 'package:my_greenhouse/Services/AuthService.dart';
 
+import 'Services/GreenHouseMG.dart';
 import 'homepage.dart';
 
 class signIn extends StatefulWidget {
@@ -59,7 +60,7 @@ class _signInState extends State<signIn> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+   GreenHouseMG().gethistoriqueTemp();
     return Scaffold(
       //  type: MaterialType.canvas,
       body: SafeArea(
@@ -244,7 +245,9 @@ class _signInState extends State<signIn> {
                             // }
                           },
                         ),
+                       
                       ],
+
                     ),
                   ),
                 ),
