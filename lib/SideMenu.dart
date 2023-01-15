@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_greenhouse/Constants.dart';
 import 'package:my_greenhouse/HouseControlScreen.dart';
 import 'package:my_greenhouse/Services/userServices.dart';
 import 'package:my_greenhouse/homepage.dart';
+import 'package:my_greenhouse/statScreen.dart';
 
 import 'Models/User.dart';
 import 'Services/AuthService.dart';
@@ -60,8 +62,9 @@ class SideMenu extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              accountName:   Text('${myUserApp.userName} ${myUserApp.userLastName}'),
-              accountEmail:  Text(myUserApp.userMail),
+              accountName:
+                  Text('${myUserApp.userName} ${myUserApp.userLastName}'),
+              accountEmail: Text(myUserApp.userMail),
               currentAccountPicture: CircleAvatar(
                 child: ClipOval(
                   child: Image.network(
@@ -73,7 +76,7 @@ class SideMenu extends StatelessWidget {
                 ),
               ),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: KLightGreen,
                 image: DecorationImage(
                     fit: BoxFit.fill,
                     image: NetworkImage(myUserApp.userCoverImg)),
@@ -103,6 +106,16 @@ class SideMenu extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const HouseControl()));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.stacked_bar_chart_sharp),
+              title: const Text('Statistics'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const StatScreen()));
               },
             ),
             const ListTile(

@@ -3,18 +3,42 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:my_greenhouse/Constants.dart';
+import 'package:my_greenhouse/Services/GreenHouseMG.dart';
 import 'package:my_greenhouse/Services/MqttDataHouseManager.dart';
 
-class BaseInfo extends StatelessWidget {
+class BaseInfo extends StatefulWidget {
   const BaseInfo({
     Key? key,
-    required this.mqttClientManager,
   }) : super(key: key);
 
-  final MqttDataHouseManager mqttClientManager;
+  @override
+  State<BaseInfo> createState() => _BaseInfoState();
+}
+
+class _BaseInfoState extends State<BaseInfo> {
+  MqttDataHouseManager mqttClientManager = MqttDataHouseManager();
+  final String pubTopic = "ISIariana/2ING2/my_GreenHouse/sensors";
+  Future<void> setupMqttClient() async {
+    await mqttClientManager.connect();
+    mqttClientManager.subscribe(pubTopic);
+  }
+
+  @override
+  void dispose() {
+    mqttClientManager.disconnect();
+    super.dispose();
+  }
+ 
+  @override
+  void initState() {
+    print("connecting to hive broker ");
+    setupMqttClient();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    Map prevInfo = {"temp":0,"hum":-1};
     return StreamBuilder(
       stream: mqttClientManager.getMessagesStream(),
       builder: (context, snapshot) {
@@ -33,7 +57,12 @@ class BaseInfo extends StatelessWidget {
             final pt = MqttPublishPayload.bytesToStringAsString(
                 recMess.payload.message);
             Map info = mqttClientManager.getsimpleInfo(pt);
-
+            if (info["temp"] != prevInfo["temp"]||info["hum"] != prevInfo["hum"]) {
+              prevInfo= info;
+              String now = DateTime.now().toString().substring(0, 16);
+              //send data to firebase
+              GreenHouseMG().addNewInfo({now: info});
+            }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -90,49 +119,6 @@ class BaseInfo extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 60,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 50, 15, 20),
-                  child: Container(
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(240, 229, 217, 182),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 50, vertical: 20),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(50)),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.stacked_bar_chart_outlined,
-                            size: 28,
-                          ),
-                          Text(
-                            "Voir historiques ",
-                            style: GoogleFonts.lato(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_outlined,
-                            size: 28,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                )
               ],
             );
           }

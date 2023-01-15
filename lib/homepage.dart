@@ -4,6 +4,8 @@ import 'package:my_greenhouse/Services/MqttDataHouseManager.dart';
 import 'package:my_greenhouse/SideMenu.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'btnHistoStatistics.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -13,15 +15,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  MqttDataHouseManager mqttClientManager = MqttDataHouseManager();
-  final String pubTopic = "ISIariana/2ING2/my_GreenHouse/sensors";
 
-  @override
-  void initState() {
-    print("connecting to hive broker ");
-    setupMqttClient();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +85,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ],
                     ),
-                    BaseInfo(mqttClientManager: mqttClientManager),
+                    BaseInfo(),
+                        const SizedBox(
+                  height: 60,
+                ),
+                       const  BtnHistoStatistics()
                   ],
                 ),
               ),
@@ -102,10 +100,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<void> setupMqttClient() async {
-    await mqttClientManager.connect();
-    mqttClientManager.subscribe(pubTopic);
-  }
 
   /*  void setupUpdatesListener() {
     mqttClientManager
@@ -122,9 +116,5 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   } */
 
-  @override
-  void dispose() {
-    mqttClientManager.disconnect();
-    super.dispose();
-  }
+
 }

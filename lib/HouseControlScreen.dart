@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
+ import 'package:google_fonts/google_fonts.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:my_greenhouse/InfoBulle.dart';
 import 'package:my_greenhouse/Services/MqttDataHouseManager.dart';
@@ -33,7 +32,7 @@ class _HouseControlState extends State<HouseControl> {
 
   void displayInfo(String msg) {
     final snackBar = SnackBar(
-      content: Text('$msg'),
+      content: Text(msg),
       backgroundColor: const Color.fromARGB(240, 185, 205, 152),
       behavior: SnackBarBehavior.floating,
     );

@@ -107,14 +107,15 @@ class MqttDataHouseManager {
   }
 
   // manipulate res mqtt to known data
-  Map getsimpleInfo(String infoFromMqtt) {
-    Map res = new Map();
+  Map<String,String> getsimpleInfo(String infoFromMqtt) {
+   Map<String,String> res =   <String,String>{};
     List<String> myres = infoFromMqtt.split(",");
-    res["temp"] = myres[1].substring(myres[1].indexOf(":") + 1);
-    res["hum"] = myres[2].substring(myres[2].indexOf(":") + 1);
+    res["water"] = myres[0].substring(myres[0].indexOf(":") + 2).trim();
+    res["temp"] = myres[1].substring(myres[1].indexOf(":") + 2).trim();
+    res["hum"] = myres[2].substring(myres[2].indexOf(":") + 2).trim();
     res["light"] = myres[3]
-        .substring(myres[1].indexOf(":") + 1, myres[3].lastIndexOf("}"));
-    res["water"] = myres[0].substring(myres[0].indexOf(":") + 1);
+        .substring(myres[1].indexOf(":") + 1, myres[3].lastIndexOf("}")).trim();
+    
     print("*********\n");
     print(res);
     print("*********\n");
