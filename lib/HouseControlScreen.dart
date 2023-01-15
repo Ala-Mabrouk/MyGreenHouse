@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
- import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:my_greenhouse/InfoBulle.dart';
 import 'package:my_greenhouse/Services/MqttDataHouseManager.dart';
@@ -259,7 +260,7 @@ class _HouseControlState extends State<HouseControl> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Turn on the light ",
+                              "Turn on the UV-light ",
                               style: GoogleFonts.lato(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -337,6 +338,8 @@ class _HouseControlState extends State<HouseControl> {
                                     color: Color.fromARGB(240, 95, 140, 78),
                                   ),
                                   onPressed: () {
+                                    FlutterPhoneDirectCaller.callNumber(
+                                        "+21600000000");
                                     displayInfo(
                                         "making a call to +216 ** *** ***");
                                   },

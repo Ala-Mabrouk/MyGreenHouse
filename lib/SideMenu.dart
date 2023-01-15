@@ -118,7 +118,9 @@ class SideMenu extends StatelessWidget {
                         builder: (context) => const StatScreen()));
               },
             ),
-            const ListTile(
+            const Divider(),
+
+            /*     const ListTile(
               leading: Icon(Icons.notifications),
               title: Text('Request'),
             ),
@@ -127,14 +129,13 @@ class SideMenu extends StatelessWidget {
               leading: const Icon(Icons.person),
               title: const Text('My Account'),
               onTap: () => null,
-            ),
+            ), */
             ListTile(
               leading: const Icon(Icons.share),
               title: const Text('Share'),
               onTap: () => null,
             ),
-            const Divider(),
-            ListTile(
+             ListTile(
               title: const Text('Log out'),
               leading: const Icon(Icons.exit_to_app),
               onTap: () => logOut(),

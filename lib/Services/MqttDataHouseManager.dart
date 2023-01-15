@@ -12,7 +12,7 @@ class MqttDataHouseManager {
   Future<int> connect() async {
     int id = rng.nextInt(1000);
     client.logging(on: true);
-    client.keepAlivePeriod = 5;
+    client.keepAlivePeriod = 10;
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;
     client.onSubscribed = onSubscribed;
