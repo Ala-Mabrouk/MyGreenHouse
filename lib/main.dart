@@ -1,20 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:my_greenhouse/Services/newNotiffication.dart';
-import 'package:my_greenhouse/homepage.dart';
-import 'package:my_greenhouse/login.dart';
+import 'package:my_greenhouse/SplashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Services/GreenHouseMG.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //await GreenHouseMG().gethistoriqueHum();
-
   runApp(MyApp(isloged: prefs.getString('UserID') != null));
-  //runApp(MyWidget());
+ 
 }
 
 class MyApp extends StatelessWidget {
@@ -30,10 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      //  home: StatScreen()
-      home: (isloged)
-          ? const MyHomePage(title: 'My Green house')
-          : const signIn(),
+        home: splashScreen(logedIn:isloged,)
     );
   }
 }

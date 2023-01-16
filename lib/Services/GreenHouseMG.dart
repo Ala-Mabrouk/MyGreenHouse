@@ -27,6 +27,7 @@ class GreenHouseMG {
     print(data);
     return data;
   }
+
   Future<List<Humidity>> gethistoriqueHum() async {
     List<Humidity> data = [];
     await GreenHouseInfos.get().then((value) {
@@ -43,7 +44,7 @@ class GreenHouseMG {
         return MapEntry(key, value);
       });
     }).whenComplete(() => data);
-        print(data);
+    print(data);
 
     return data;
   }

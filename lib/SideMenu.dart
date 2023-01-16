@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:my_greenhouse/Constants.dart';
 import 'package:my_greenhouse/HouseControlScreen.dart';
@@ -48,6 +50,72 @@ class SideMenu extends StatelessWidget {
                           (route) => false));
                 },
               )
+            ],
+          );
+        },
+      );
+    }
+
+    Future shareApp() {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: true, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            actionsAlignment: MainAxisAlignment.center,
+            title: const Center(
+                child: Text(
+              'Rate and Share ',
+              style: TextStyle(color: KLightGreen, fontStyle: FontStyle.italic,fontSize: 35),
+            )),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(5, (index) {
+                        return Icon(
+                          index < 3 ? Icons.star : Icons.star_border,
+                        );
+                      })),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                      'Tell your freinds, family and neighbours.\n Hell share it with whole world'),
+                       const SizedBox(
+                    height: 20,
+                  ),
+                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                       IconButton(
+                        iconSize: 40,
+                  onPressed: () => print("share what's up"),
+                  icon: const Icon(Icons.whatsapp)),
+              IconButton(
+                iconSize: 40,
+                  onPressed: () => print("share facebook"),
+                  icon: const Icon(Icons.facebook)),
+              IconButton(
+                iconSize: 40,
+                  onPressed: () => print("share what's up"),
+                  icon: const Icon(Icons.message_outlined)),
+                     ],)
+                ],
+              ),
+            ),
+            actions: const <Widget>[
+              Text(
+                "Close",
+                style: TextStyle(
+                  fontSize: 20,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.amber),
+              ),
+              
             ],
           );
         },
@@ -133,9 +201,9 @@ class SideMenu extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.share),
               title: const Text('Share'),
-              onTap: () => null,
+              onTap: () => shareApp(),
             ),
-             ListTile(
+            ListTile(
               title: const Text('Log out'),
               leading: const Icon(Icons.exit_to_app),
               onTap: () => logOut(),
