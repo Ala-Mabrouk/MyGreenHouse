@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_greenhouse/Constants.dart';
-
+import 'package:my_greenhouse/Widgets/Constants.dart';
+ 
 class InfoBulle extends StatelessWidget {
   const InfoBulle({
     Key? key,

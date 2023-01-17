@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:my_greenhouse/SplashScreen.dart';
+import 'package:my_greenhouse/MainScreens/SplashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-        home: splashScreen(logedIn:isloged,)
+        home: SplashScreen(logedIn:isloged,)
     );
   }
 }

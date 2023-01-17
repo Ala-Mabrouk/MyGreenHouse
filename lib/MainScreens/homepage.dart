@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_greenhouse/BaseInfo.dart';
-import 'package:my_greenhouse/Services/MqttDataHouseManager.dart';
-import 'package:my_greenhouse/SideMenu.dart';
+import 'package:my_greenhouse/MainScreens/BaseInfo.dart';
+import 'package:my_greenhouse/Widgets/SideMenu.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'btnHistoStatistics.dart';
+import '../Widgets/btnHistoStatistics.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -15,8 +14,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
   @override
   Widget build(BuildContext context) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -85,11 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ],
                     ),
-                    BaseInfo(),
-                        const SizedBox(
-                  height: 60,
-                ),
-                       const  BtnHistoStatistics()
+                   const BaseInfo(),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    const BtnHistoStatistics()
                   ],
                 ),
               ),
@@ -99,22 +96,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ])),
     );
   }
-
-
-  /*  void setupUpdatesListener() {
-    mqttClientManager
-        .getMessagesStream()!
-        .listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
-      final recMess = c![0].payload as MqttPublishMessage;
-      final pt =
-          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-
-      setState(() {
-          = pt;
-      });
-      print('MQTTClient::Message received on topic: <${c[0].topic}> is $pt\n');
-    });
-  } */
-
-
 }

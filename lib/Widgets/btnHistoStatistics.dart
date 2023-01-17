@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_greenhouse/statScreen.dart';
-
+import 'package:my_greenhouse/MainScreens/statScreen.dart';
+ 
 class BtnHistoStatistics extends StatelessWidget {
   const BtnHistoStatistics({
     Key? key,
@@ -13,15 +13,13 @@ class BtnHistoStatistics extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(10, 50, 10, 20),
       child: Container(
         child: ElevatedButton(
-          onPressed: () { Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const StatScreen()));},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const StatisticsScreen()));
+          },
           style: ElevatedButton.styleFrom(
-            backgroundColor:
-                const Color.fromARGB(240, 229, 217, 182),
-            padding: const EdgeInsets.symmetric(
-                horizontal: 35, vertical: 20),
+            backgroundColor: const Color.fromARGB(240, 229, 217, 182),
+            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(50)),
             ),

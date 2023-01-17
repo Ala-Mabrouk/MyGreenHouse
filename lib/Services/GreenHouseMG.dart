@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_greenhouse/Models/Humidity.dart';
-import 'package:my_greenhouse/statScreen.dart';
 
 import '../Models/Temperature.dart';
 
@@ -24,7 +23,7 @@ class GreenHouseMG {
         return MapEntry(key, value);
       });
     }).whenComplete(() => data);
-    print(data);
+
     return data;
   }
 
@@ -34,7 +33,6 @@ class GreenHouseMG {
       final a = value.data() as Map<String, dynamic>;
       var res = a["histoInfo"] as Map<String, dynamic>;
       res.map((key, value) {
-        print("$key $value");
         var parsedDate = DateTime.parse(key);
         if (parsedDate.day == DateTime.now().day) {
           data.add(Humidity(
@@ -44,7 +42,6 @@ class GreenHouseMG {
         return MapEntry(key, value);
       });
     }).whenComplete(() => data);
-    print(data);
 
     return data;
   }

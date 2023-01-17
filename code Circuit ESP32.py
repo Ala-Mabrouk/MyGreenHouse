@@ -1,20 +1,7 @@
 """
-MicroPython IoT Weather Station Example for Wokwi.com
+MicroPython IoT Green house Control and managment  
 
-To view the data:
-
-1. Go to http://www.hivemq.com/demos/websocket-client/
-2. Click "Connect"
-3. Under Subscriptions, click "Add New Topic Subscription"
-4. In the Topic field, type "wokwi-weather" then click "Subscribe"
-
-Now click on the DHT22 sensor in the simulation,
-change the temperature/humidity, and you should see
-the message appear on the MQTT Broker, in the "Messages" pane.
-
-Copyright (C) 2022, Uri Shaked
-
-https://wokwi.com/arduino/projects/322577683855704658
+https://wokwi.com/projects/350213119863161428
 """
 
 import network
@@ -31,7 +18,7 @@ from time import sleep
  # MQTT Server Parameters
 MQTT_CLIENT_ID = "micropython-weather-demo"
 MQTT_BROKER    = "broker.hivemq.com"
-MQTT_USER      = ""#"ISI_MCU_Project"
+MQTT_USER      = "A.D.M.S"#"ISI_MCU_Project"
 MQTT_PASSWORD  = ""#"STM32groupeISI"
 MQTT_TOPIC     = "ISIariana/2ING2/my_GreenHouse/sensors"
 

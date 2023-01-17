@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:my_greenhouse/Constants.dart';
+import 'package:my_greenhouse/Widgets/Constants.dart';
 import 'package:my_greenhouse/Services/GreenHouseMG.dart';
 
-import 'Models/Humidity.dart';
-import 'Models/Temperature.dart';
-import 'SideMenu.dart';
+import '../Models/Humidity.dart';
+import '../Models/Temperature.dart';
+import '../Widgets/SideMenu.dart';
 
-class StatScreen extends StatelessWidget {
-  const StatScreen({super.key});
+class StatisticsScreen extends StatelessWidget {
+  const StatisticsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,10 @@ class StatScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black38,
-        title: const Text("Today Statistics ",style: TextStyle(fontSize: 25),),
+        title: const Text(
+          "Today Statistics ",
+          style: TextStyle(fontSize: 25),
+        ),
       ),
       drawer: const SideMenu(),
       body: SafeArea(
@@ -46,7 +48,9 @@ class StatScreen extends StatelessWidget {
                         const Text(
                           "Temperature evolution C° ",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, color: KLightGreen,fontSize: 20),
+                              fontWeight: FontWeight.bold,
+                              color: KLightGreen,
+                              fontSize: 20),
                         ),
                         const SizedBox(
                           height: 20,
@@ -98,7 +102,9 @@ class StatScreen extends StatelessWidget {
                         const Text(
                           "Humidity evolution %  ",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, color: KLightGreen,fontSize: 20),
+                              fontWeight: FontWeight.bold,
+                              color: KLightGreen,
+                              fontSize: 20),
                         ),
                         const SizedBox(
                           height: 20,
