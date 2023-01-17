@@ -24,11 +24,11 @@ class SideMenu extends StatelessWidget {
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Center(child: Text('Deconnexion')),
+            title: const Center(child: Text('Disconnexion')),
             content: SingleChildScrollView(
               child: ListBody(
                 children: const <Widget>[
-                  Text('you are going to disconnect your session ?'),
+                  Text('You are going to disconnect your session ?'),
                 ],
               ),
             ),
@@ -40,7 +40,7 @@ class SideMenu extends StatelessWidget {
                     Navigator.pop(context);
                   }),
               TextButton(
-                child: const Text('Logout'),
+                child: const Text('Disconnect'),
                 onPressed: () {
                   AuthService().logout().whenComplete(() =>
                       Navigator.pushAndRemoveUntil(
@@ -79,7 +79,7 @@ class SideMenu extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(5, (index) {
                         return Icon(
-                          index < 3 ? Icons.star : Icons.star_border,color: Colors.amber,size: 45,
+                          index < 4 ? Icons.star : Icons.star_border,color: Colors.amber,size: 45,
                         );
                       })),
                   const SizedBox(
@@ -160,7 +160,7 @@ class SideMenu extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.home),
-              title: const Text('Home page'),
+              title: const Text('Home'),
               onTap: () {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -176,7 +176,7 @@ class SideMenu extends StatelessWidget {
             const Divider(),
             ListTile(
               leading: const Icon(Icons.settings),
-              title: const Text('Control Green_House'),
+              title: const Text('Green House Controle'),
               onTap: () {
                 Navigator.push(
                     context,

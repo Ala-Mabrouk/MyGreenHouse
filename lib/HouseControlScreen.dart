@@ -79,7 +79,7 @@ class _HouseControlState extends State<HouseControl> {
                   child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
-                  "Current Info",
+                  "Current informations",
                   style: GoogleFonts.lato(
                     fontSize: 35,
                     fontWeight: FontWeight.w600,
@@ -197,7 +197,7 @@ class _HouseControlState extends State<HouseControl> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Turn on vans for water ",
+                              "Open / Close water pipe ",
                               style: GoogleFonts.lato(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -225,7 +225,7 @@ class _HouseControlState extends State<HouseControl> {
                                   ),
                                   onPressed: () {
                                     displayInfo(
-                                        "open or close the water vans in the green housse");
+                                        "Open or Close the water pipe in the green house");
                                   },
                                 ),
                               ],
@@ -288,7 +288,7 @@ class _HouseControlState extends State<HouseControl> {
                                   ),
                                   onPressed: () {
                                     displayInfo(
-                                        "open or close the Ultra Violt light in the green house");
+                                        "Open or close the Ultra Violet light in the green house");
                                   },
                                 ),
                               ],
@@ -323,7 +323,7 @@ class _HouseControlState extends State<HouseControl> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Call responsable ",
+                              "Call responsible ",
                               style: GoogleFonts.lato(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -339,7 +339,7 @@ class _HouseControlState extends State<HouseControl> {
                                   ),
                                   onPressed: () {
                                     FlutterPhoneDirectCaller.callNumber(
-                                        "+21600000000");
+                                        "+21622845764");
                                     displayInfo(
                                         "making a call to +216 ** *** ***");
                                   },
@@ -351,7 +351,7 @@ class _HouseControlState extends State<HouseControl> {
                                   ),
                                   onPressed: () {
                                     displayInfo(
-                                        "make a call to the responsable / gard of the green house");
+                                        "Make a call to the responsible / Gard of the green house");
                                   },
                                 ),
                               ],

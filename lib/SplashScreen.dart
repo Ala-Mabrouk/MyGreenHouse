@@ -31,6 +31,8 @@ class splashScreen extends StatelessWidget {
                       'assets/theloading.gif',
                       height: size.height * 0.03,
                     ),
+                    SizedBox(height: 20,),
+                    Text("Devoloped By A.D.M.S"),
                   ],
                 )),
             nextScreen: (logedIn)
