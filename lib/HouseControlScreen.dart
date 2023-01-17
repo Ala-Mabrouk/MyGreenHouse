@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
- import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:my_greenhouse/InfoBulle.dart';
 import 'package:my_greenhouse/Services/MqttDataHouseManager.dart';
@@ -78,7 +79,7 @@ class _HouseControlState extends State<HouseControl> {
                   child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
-                  "Current Info",
+                  "Current informations",
                   style: GoogleFonts.lato(
                     fontSize: 35,
                     fontWeight: FontWeight.w600,
@@ -196,7 +197,7 @@ class _HouseControlState extends State<HouseControl> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Turn on vans for water ",
+                              "Open / Close water pipe ",
                               style: GoogleFonts.lato(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -224,7 +225,7 @@ class _HouseControlState extends State<HouseControl> {
                                   ),
                                   onPressed: () {
                                     displayInfo(
-                                        "open or close the water vans in the green housse");
+                                        "Open or Close the water pipe in the green house");
                                   },
                                 ),
                               ],
@@ -259,7 +260,7 @@ class _HouseControlState extends State<HouseControl> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Turn on the light ",
+                              "Turn on the UV-light ",
                               style: GoogleFonts.lato(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -287,7 +288,7 @@ class _HouseControlState extends State<HouseControl> {
                                   ),
                                   onPressed: () {
                                     displayInfo(
-                                        "open or close the Ultra Violt light in the green house");
+                                        "Open or close the Ultra Violet light in the green house");
                                   },
                                 ),
                               ],
@@ -322,7 +323,7 @@ class _HouseControlState extends State<HouseControl> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Call responsable ",
+                              "Call responsible ",
                               style: GoogleFonts.lato(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -337,6 +338,8 @@ class _HouseControlState extends State<HouseControl> {
                                     color: Color.fromARGB(240, 95, 140, 78),
                                   ),
                                   onPressed: () {
+                                    FlutterPhoneDirectCaller.callNumber(
+                                        "+21622845764");
                                     displayInfo(
                                         "making a call to +216 ** *** ***");
                                   },
@@ -348,7 +351,7 @@ class _HouseControlState extends State<HouseControl> {
                                   ),
                                   onPressed: () {
                                     displayInfo(
-                                        "make a call to the responsable / gard of the green house");
+                                        "Make a call to the responsible / Gard of the green house");
                                   },
                                 ),
                               ],

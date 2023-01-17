@@ -57,10 +57,25 @@ class _signInState extends State<signIn> {
     }
   }
 
+/*   late final NotificationService notificationService;
+  @override
+  void initState() {
+    notificationService = NotificationService();
+    listenToNotificationStream();
+    notificationService.initializePlatformNotifications();
+    super.initState();
+  }
+void listenToNotificationStream() =>
+    notificationService.behaviorSubject.listen((payload) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HouseControl()));
+}); */
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-   GreenHouseMG().gethistoriqueTemp();
+    GreenHouseMG().gethistoriqueTemp();
     return Scaffold(
       //  type: MaterialType.canvas,
       body: SafeArea(
@@ -245,9 +260,21 @@ class _signInState extends State<signIn> {
                             // }
                           },
                         ),
-                       
+                        /* ElevatedButton(
+                          onPressed: () {
+                            Notif().getNotification(
+                                "High Temp", "you are fucked up !");
+                          },
+                          /* onPressed: () async {
+                            await notificationService.showLocalNotification(
+                                id: 0,
+                                title: "Drink Water",
+                                body: "Time to drink some water!",
+                                payload: "You just took water! Huurray!");
+                          }, */
+                          child: const Text("Drink Now"),
+                        ), */
                       ],
-
                     ),
                   ),
                 ),

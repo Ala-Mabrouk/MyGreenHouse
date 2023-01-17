@@ -10,7 +10,7 @@ class BtnHistoStatistics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 50, 15, 20),
+      padding: const EdgeInsets.fromLTRB(10, 50, 10, 20),
       child: Container(
         child: ElevatedButton(
           onPressed: () { Navigator.push(
@@ -21,7 +21,7 @@ class BtnHistoStatistics extends StatelessWidget {
             backgroundColor:
                 const Color.fromARGB(240, 229, 217, 182),
             padding: const EdgeInsets.symmetric(
-                horizontal: 50, vertical: 20),
+                horizontal: 35, vertical: 20),
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(50)),
             ),
@@ -36,7 +36,7 @@ class BtnHistoStatistics extends StatelessWidget {
                 size: 28,
               ),
               Text(
-                "Voir historiques ",
+                "View history and stat ",
                 style: GoogleFonts.lato(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

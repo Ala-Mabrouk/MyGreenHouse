@@ -19,7 +19,7 @@ https://wokwi.com/arduino/projects/322577683855704658
 
 import network
 import time
-import machine
+import machine 
 from machine import Pin ,PWM,SoftI2C
 from lcd_api import LcdApi
 from i2c_lcd import I2cLcd
@@ -140,8 +140,8 @@ client.subscribe("ISIariana/2ING2/my_GreenHouse/Controllers")
 
 lcd.putstr("my green house info:")
 while True:
-  
-  #print("looking for controllers value ?")
+
+
   #reading controller if exists new values (subscribed )
   client.check_msg()
 

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:my_greenhouse/Constants.dart';
 import 'package:my_greenhouse/HouseControlScreen.dart';
@@ -22,11 +24,11 @@ class SideMenu extends StatelessWidget {
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Center(child: Text('Deconnexion')),
+            title: const Center(child: Text('Disconnexion')),
             content: SingleChildScrollView(
               child: ListBody(
                 children: const <Widget>[
-                  Text('you are going to disconnect your session ?'),
+                  Text('You are going to disconnect your session ?'),
                 ],
               ),
             ),
@@ -38,7 +40,7 @@ class SideMenu extends StatelessWidget {
                     Navigator.pop(context);
                   }),
               TextButton(
-                child: const Text('Logout'),
+                child: const Text('Disconnect'),
                 onPressed: () {
                   AuthService().logout().whenComplete(() =>
                       Navigator.pushAndRemoveUntil(
@@ -49,6 +51,80 @@ class SideMenu extends StatelessWidget {
                 },
               )
             ],
+          );
+        },
+      );
+    }
+
+    Future shareApp() {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: true, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            actionsAlignment: MainAxisAlignment.center,
+            title: const Center(
+                child: Text(
+              'Rate and Share ',
+              style: TextStyle(
+                  color: KLightGreen,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 35),
+            )),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(5, (index) {
+                        return Icon(
+                          index < 4 ? Icons.star : Icons.star_border,color: Colors.amber,size: 45,
+                        );
+                      })),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    'Tell your freinds, family and neighbours.\n Hell share it with whole world',
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                          color: const Color.fromARGB(255, 10, 233, 2),
+                          iconSize: 50,
+                          onPressed: () => print("share what's up"),
+                          icon: const Icon(Icons.whatsapp)),
+                      IconButton(
+                          color: const Color.fromRGBO(56, 83, 149, 1),
+                          iconSize: 50,
+                          onPressed: () => print("share facebook"),
+                          icon: const Icon(Icons.facebook)),
+                      IconButton(
+                          color: const Color.fromRGBO(3, 169, 244, 0.9),
+                          iconSize: 50,
+                          onPressed: () => print("share what's up"),
+                          icon: const Icon(Icons.message_outlined)),
+                    ],
+                  ),                  
+                ],
+              ),
+            ),
+            actions: <Widget>[GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Close",
+                      style: TextStyle(fontSize: 15, color: Colors.grey),
+                    ),
+                  ),],
           );
         },
       );
@@ -84,7 +160,7 @@ class SideMenu extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.home),
-              title: const Text('Home page'),
+              title: const Text('Home'),
               onTap: () {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -100,7 +176,7 @@ class SideMenu extends StatelessWidget {
             const Divider(),
             ListTile(
               leading: const Icon(Icons.settings),
-              title: const Text('Control Green_House'),
+              title: const Text('Green House Controle'),
               onTap: () {
                 Navigator.push(
                     context,
@@ -118,7 +194,9 @@ class SideMenu extends StatelessWidget {
                         builder: (context) => const StatScreen()));
               },
             ),
-            const ListTile(
+            const Divider(),
+
+            /*     const ListTile(
               leading: Icon(Icons.notifications),
               title: Text('Request'),
             ),
@@ -127,13 +205,12 @@ class SideMenu extends StatelessWidget {
               leading: const Icon(Icons.person),
               title: const Text('My Account'),
               onTap: () => null,
-            ),
+            ), */
             ListTile(
               leading: const Icon(Icons.share),
               title: const Text('Share'),
-              onTap: () => null,
+              onTap: () => shareApp(),
             ),
-            const Divider(),
             ListTile(
               title: const Text('Log out'),
               leading: const Icon(Icons.exit_to_app),

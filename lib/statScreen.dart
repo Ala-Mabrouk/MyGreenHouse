@@ -27,7 +27,7 @@ class StatScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black38,
-        title: const Text("Statistics of Today "),
+        title: const Text("Today Statistics ",style: TextStyle(fontSize: 25),),
       ),
       drawer: const SideMenu(),
       body: SafeArea(
@@ -44,9 +44,9 @@ class StatScreen extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          "Temprerature evolution C° ",
+                          "Temperature evolution C° ",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, color: KLightGreen),
+                              fontWeight: FontWeight.bold, color: KLightGreen,fontSize: 20),
                         ),
                         const SizedBox(
                           height: 20,
@@ -98,7 +98,7 @@ class StatScreen extends StatelessWidget {
                         const Text(
                           "Humidity evolution %  ",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, color: KLightGreen),
+                              fontWeight: FontWeight.bold, color: KLightGreen,fontSize: 20),
                         ),
                         const SizedBox(
                           height: 20,

@@ -3,8 +3,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:my_greenhouse/Constants.dart';
+import 'package:my_greenhouse/Models/Temperature.dart';
 import 'package:my_greenhouse/Services/GreenHouseMG.dart';
 import 'package:my_greenhouse/Services/MqttDataHouseManager.dart';
+import 'package:my_greenhouse/Services/newNotiffication.dart';
 
 class BaseInfo extends StatefulWidget {
   const BaseInfo({
@@ -28,7 +30,7 @@ class _BaseInfoState extends State<BaseInfo> {
     mqttClientManager.disconnect();
     super.dispose();
   }
- 
+
   @override
   void initState() {
     print("connecting to hive broker ");
@@ -38,7 +40,7 @@ class _BaseInfoState extends State<BaseInfo> {
 
   @override
   Widget build(BuildContext context) {
-    Map prevInfo = {"temp":0,"hum":-1};
+    Map prevInfo = {"temp": 0, "hum": -1};
     return StreamBuilder(
       stream: mqttClientManager.getMessagesStream(),
       builder: (context, snapshot) {
@@ -57,11 +59,25 @@ class _BaseInfoState extends State<BaseInfo> {
             final pt = MqttPublishPayload.bytesToStringAsString(
                 recMess.payload.message);
             Map info = mqttClientManager.getsimpleInfo(pt);
-            if (info["temp"] != prevInfo["temp"]||info["hum"] != prevInfo["hum"]) {
-              prevInfo= info;
+            if (info["temp"] != prevInfo["temp"] ||
+                info["hum"] != prevInfo["hum"]) {
+              prevInfo = info;
               String now = DateTime.now().toString().substring(0, 16);
               //send data to firebase
               GreenHouseMG().addNewInfo({now: info});
+            }
+            if (double.parse(info["temp"].toString()) > 24 ||
+                double.parse(info["temp"].toString()) < 18) {
+              //send notification
+              Notif().getNotification("temperature problem",
+                  "critical condition in the green house\n Temperateur is ${info['temp']}");
+            }
+              if (double.parse(info["hum"].toString()) > 81 ||
+                double.parse(info["hum"].toString()) < 79) {
+              //send notification
+
+              Notif().getNotification("humudity problem",
+                  "critical condition in the green house\n humudity is ${info['hum']}");
             }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
