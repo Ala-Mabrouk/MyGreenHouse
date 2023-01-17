@@ -66,7 +66,10 @@ class SideMenu extends StatelessWidget {
             title: const Center(
                 child: Text(
               'Rate and Share ',
-              style: TextStyle(color: KLightGreen, fontStyle: FontStyle.italic,fontSize: 35),
+              style: TextStyle(
+                  color: KLightGreen,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 35),
             )),
             content: SingleChildScrollView(
               child: ListBody(
@@ -76,47 +79,52 @@ class SideMenu extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(5, (index) {
                         return Icon(
-                          index < 3 ? Icons.star : Icons.star_border,
+                          index < 3 ? Icons.star : Icons.star_border,color: Colors.amber,size: 45,
                         );
                       })),
                   const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                      'Tell your freinds, family and neighbours.\n Hell share it with whole world'),
-                       const SizedBox(
                     height: 20,
                   ),
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                       IconButton(
-                        iconSize: 40,
-                  onPressed: () => print("share what's up"),
-                  icon: const Icon(Icons.whatsapp)),
-              IconButton(
-                iconSize: 40,
-                  onPressed: () => print("share facebook"),
-                  icon: const Icon(Icons.facebook)),
-              IconButton(
-                iconSize: 40,
-                  onPressed: () => print("share what's up"),
-                  icon: const Icon(Icons.message_outlined)),
-                     ],)
+                  const Text(
+                    'Tell your freinds, family and neighbours.\n Hell share it with whole world',
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                          color: const Color.fromARGB(255, 10, 233, 2),
+                          iconSize: 50,
+                          onPressed: () => print("share what's up"),
+                          icon: const Icon(Icons.whatsapp)),
+                      IconButton(
+                          color: const Color.fromRGBO(56, 83, 149, 1),
+                          iconSize: 50,
+                          onPressed: () => print("share facebook"),
+                          icon: const Icon(Icons.facebook)),
+                      IconButton(
+                          color: const Color.fromRGBO(3, 169, 244, 0.9),
+                          iconSize: 50,
+                          onPressed: () => print("share what's up"),
+                          icon: const Icon(Icons.message_outlined)),
+                    ],
+                  ),                  
                 ],
               ),
             ),
-            actions: const <Widget>[
-              Text(
-                "Close",
-                style: TextStyle(
-                  fontSize: 20,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.amber),
-              ),
-              
-            ],
+            actions: <Widget>[GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Close",
+                      style: TextStyle(fontSize: 15, color: Colors.grey),
+                    ),
+                  ),],
           );
         },
       );
