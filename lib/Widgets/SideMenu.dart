@@ -1,15 +1,12 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:my_greenhouse/Constants.dart';
-import 'package:my_greenhouse/HouseControlScreen.dart';
+import 'package:my_greenhouse/MainScreens/HouseControlScreen.dart';
+import 'package:my_greenhouse/MainScreens/homepage.dart';
+import 'package:my_greenhouse/MainScreens/login.dart';
+import 'package:my_greenhouse/MainScreens/statScreen.dart';
+import 'package:my_greenhouse/Models/User.dart';
+import 'package:my_greenhouse/Services/AuthService.dart';
 import 'package:my_greenhouse/Services/userServices.dart';
-import 'package:my_greenhouse/homepage.dart';
-import 'package:my_greenhouse/statScreen.dart';
-
-import 'Models/User.dart';
-import 'Services/AuthService.dart';
-import 'login.dart';
+import 'package:my_greenhouse/Widgets/Constants.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -36,7 +33,6 @@ class SideMenu extends StatelessWidget {
               TextButton(
                   child: const Text('Dismiss'),
                   onPressed: () {
-                    print('alert dissmiss');
                     Navigator.pop(context);
                   }),
               TextButton(
@@ -46,7 +42,7 @@ class SideMenu extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const signIn()),
+                              builder: (context) => const SignIn()),
                           (route) => false));
                 },
               )
@@ -79,7 +75,9 @@ class SideMenu extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(5, (index) {
                         return Icon(
-                          index < 4 ? Icons.star : Icons.star_border,color: Colors.amber,size: 45,
+                          index < 4 ? Icons.star : Icons.star_border,
+                          color: Colors.amber,
+                          size: 45,
                         );
                       })),
                   const SizedBox(
@@ -112,19 +110,21 @@ class SideMenu extends StatelessWidget {
                           onPressed: () => print("share what's up"),
                           icon: const Icon(Icons.message_outlined)),
                     ],
-                  ),                  
+                  ),
                 ],
               ),
             ),
-            actions: <Widget>[GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      "Close",
-                      style: TextStyle(fontSize: 15, color: Colors.grey),
-                    ),
-                  ),],
+            actions: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Close",
+                  style: TextStyle(fontSize: 15, color: Colors.grey),
+                ),
+              ),
+            ],
           );
         },
       );
@@ -191,7 +191,7 @@ class SideMenu extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const StatScreen()));
+                        builder: (context) => const StatisticsScreen()));
               },
             ),
             const Divider(),

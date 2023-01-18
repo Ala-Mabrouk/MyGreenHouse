@@ -1,10 +1,11 @@
+import 'package:my_greenhouse/Widgets/Constants.dart';
+
 class UserApp {
   String userUID = '0';
   String userName = 'foulen';
   String userLastName = 'ben foulen';
-  String userAvatar =
-      'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png'; //url to img in the firebase storage
-  String userCoverImg='http://cdn.shopify.com/s/files/1/0200/5036/products/Greenhouse_1200x630.jpg?v=1505284719';
+  String userAvatar = DAvatarImg;
+  String userCoverImg = DCoverImg;
   String userMail = 'bf.foulen@mail.com';
   String userPass = '123456789';
   String userPhone = '+21600000000';
@@ -25,9 +26,9 @@ class UserApp {
     userMail = map['e-mail'] ?? '';
     userName = map['Name'] ?? '';
     userLastName = map['LastName'] ?? '';
-    userAvatar = map['avatarPath'] ?? '';
+    userAvatar = map['avatarPath'] ?? DAvatarImg;
     userPhone = map['Phone'] ?? '';
-    userIsSubscribed = map['subscribed'] ?? false;
+    userCoverImg = map['coverImage'] ?? DCoverImg;
     userDateNaissance = map['dateNaissance'] ?? '--/--/----';
   }
   Map<String, dynamic> userToMap(UserApp user) {
@@ -36,8 +37,8 @@ class UserApp {
     data['Name'] = user.userName;
     data['LastName'] = user.userLastName;
     data['avatarPath'] = user.userAvatar;
+    data['coverImage'] = user.userCoverImg;
     data['Phone'] = user.userPhone;
-    data['subscribed'] = user.userIsSubscribed;
     data['dateNaissance'] = user.userDateNaissance;
     return data;
   }

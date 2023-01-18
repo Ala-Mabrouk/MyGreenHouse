@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mqtt_client/mqtt_client.dart';
-import 'package:my_greenhouse/InfoBulle.dart';
+import 'package:my_greenhouse/Widgets/InfoBulle.dart';
 import 'package:my_greenhouse/Services/MqttDataHouseManager.dart';
-import 'package:my_greenhouse/SideMenu.dart';
+import 'package:my_greenhouse/Widgets/SideMenu.dart';
 
 class HouseControl extends StatefulWidget {
   const HouseControl({super.key});
@@ -27,7 +27,6 @@ class _HouseControlState extends State<HouseControl> {
   @override
   void initState() {
     setupMqttClient();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -135,7 +134,6 @@ class _HouseControlState extends State<HouseControl> {
                         final pt = MqttPublishPayload.bytesToStringAsString(
                             recMess.payload.message);
                         Map info = mqttClientManager.getsimpleInfo(pt);
-                        print(info);
                         return Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

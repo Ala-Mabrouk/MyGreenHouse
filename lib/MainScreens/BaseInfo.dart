@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mqtt_client/mqtt_client.dart';
-import 'package:my_greenhouse/Constants.dart';
-import 'package:my_greenhouse/Models/Temperature.dart';
 import 'package:my_greenhouse/Services/GreenHouseMG.dart';
 import 'package:my_greenhouse/Services/MqttDataHouseManager.dart';
 import 'package:my_greenhouse/Services/newNotiffication.dart';
+import 'package:my_greenhouse/Widgets/Constants.dart';
+
+import '../Widgets/loading.dart';
 
 class BaseInfo extends StatefulWidget {
   const BaseInfo({
@@ -45,13 +45,7 @@ class _BaseInfoState extends State<BaseInfo> {
       stream: mqttClientManager.getMessagesStream(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: SpinKitRipple(
-              color: Colors.green,
-              size: 250.0,
-              duration: Duration(milliseconds: 1500),
-            ),
-          );
+          return const Center(child: Loading());
         } else {
           if (snapshot.hasData) {
             var c = snapshot.data as List<MqttReceivedMessage<MqttMessage?>>;
@@ -72,7 +66,7 @@ class _BaseInfoState extends State<BaseInfo> {
               Notif().getNotification("temperature problem",
                   "critical condition in the green house\n Temperateur is ${info['temp']}");
             }
-              if (double.parse(info["hum"].toString()) > 81 ||
+            if (double.parse(info["hum"].toString()) > 81 ||
                 double.parse(info["hum"].toString()) < 79) {
               //send notification
 

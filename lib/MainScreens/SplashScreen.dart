@@ -1,11 +1,10 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:my_greenhouse/homepage.dart';
-import 'package:my_greenhouse/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:my_greenhouse/MainScreens/homepage.dart';
+import 'package:my_greenhouse/MainScreens/login.dart';
 
-class splashScreen extends StatelessWidget {
-  const splashScreen({Key? key, this.logedIn}) : super(key: key);
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key, this.logedIn}) : super(key: key);
   final logedIn;
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class splashScreen extends StatelessWidget {
             splashIconSize: size.height,
             duration: 1500,
             splash: Container(
-                color: Color.fromRGBO(237, 238, 234, 1),
+                color: const Color.fromRGBO(237, 238, 234, 1),
                 height: size.height,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -31,15 +30,17 @@ class splashScreen extends StatelessWidget {
                       'assets/theloading.gif',
                       height: size.height * 0.03,
                     ),
-                    SizedBox(height: 20,),
-                    Text("Devoloped By A.D.M.S"),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text("Devoloped By A.D.M.S"),
                   ],
                 )),
             nextScreen: (logedIn)
                 ? const MyHomePage(title: 'My Green house')
-                : const signIn(),
+                : const SignIn(),
             splashTransition: SplashTransition.fadeTransition,
-            backgroundColor: Color.fromRGBO(237, 238, 234, 1)),
+            backgroundColor: const Color.fromRGBO(237, 238, 234, 1)),
       ),
     );
   }

@@ -1,83 +1,65 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_greenhouse/Constants.dart';
+import 'package:my_greenhouse/Widgets/Constants.dart';
+import 'package:my_greenhouse/MainScreens/homepage.dart';
 import 'package:my_greenhouse/Models/User.dart';
 import 'package:my_greenhouse/Services/AuthService.dart';
 
-import 'Services/GreenHouseMG.dart';
-import 'homepage.dart';
-
-class signIn extends StatefulWidget {
-  const signIn({Key? key}) : super(key: key);
+class SignIn extends StatefulWidget {
+  const SignIn({Key? key}) : super(key: key);
 
   @override
-  _signInState createState() => _signInState();
+  _SignInState createState() => _SignInState();
 }
 
-class _signInState extends State<signIn> {
+class _SignInState extends State<SignIn> {
   final AuthService _authService = AuthService();
 
   UserApp user = UserApp();
   bool showPassword = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  toastMsg(String msg, BuildContext theContext) {
-    ScaffoldMessenger.of(theContext).showSnackBar(SnackBar(
-      content: Text(msg),
-      behavior: SnackBarBehavior.floating,
-      elevation: 15,
-      backgroundColor: Colors.redAccent,
-    ));
-  }
 
   RegExp exp = RegExp(r'^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$');
-  submitLog(UserApp us, BuildContext theContext) async {
-    if (_formKey.currentState!.validate() == true) {
-      _formKey.currentState!.save();
-      try {
-        if (await _authService.signInEmailPassword(us.userMail, us.userPass) !=
-            null) {
-          // toastMsg("connected !", theContext);
 
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const MyHomePage(
-                        title: "my green house",
-                      )),
-              (route) => false);
-        }
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
-          toastMsg("e-mail adresse introuvable !", theContext);
-        } else if (e.code == 'wrong-password') {
-          toastMsg("Mot de passe incorrect !", theContext);
-        }
-      }
-    }
-  }
-
-/*   late final NotificationService notificationService;
-  @override
-  void initState() {
-    notificationService = NotificationService();
-    listenToNotificationStream();
-    notificationService.initializePlatformNotifications();
-    super.initState();
-  }
-void listenToNotificationStream() =>
-    notificationService.behaviorSubject.listen((payload) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HouseControl()));
-}); */
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    GreenHouseMG().gethistoriqueTemp();
+    toastMsg(String msg) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(msg),
+        behavior: SnackBarBehavior.floating,
+        elevation: 15,
+        backgroundColor: Colors.redAccent,
+      ));
+    }
+
+    submitLog(UserApp us) async {
+      if (_formKey.currentState!.validate() == true) {
+        _formKey.currentState!.save();
+        try {
+          if (await _authService.signInEmailPassword(
+                  us.userMail, us.userPass) !=
+              null) {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const MyHomePage(
+                          title: "my green house",
+                        )),
+                (route) => false);
+          }
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'user-not-found') {
+            toastMsg("e-mail adresse introuvable !");
+          } else if (e.code == 'wrong-password') {
+            toastMsg("Mot de passe incorrect !");
+          }
+        }
+      }
+    }
+
     return Scaffold(
-      //  type: MaterialType.canvas,
       body: SafeArea(
         child: Container(
           constraints: const BoxConstraints.expand(),
@@ -148,6 +130,7 @@ void listenToNotificationStream() =>
                                     } else if (!exp.hasMatch(value!)) {
                                       return "Adesse e-mail incorrect !";
                                     }
+                                  
                                   },
                                   decoration: const InputDecoration(
                                       hintText: "Adresse e-mail",
@@ -182,6 +165,7 @@ void listenToNotificationStream() =>
                                     } else if (value!.length < 6) {
                                       return "Mot de passe doit étre de 6 caracteres !";
                                     }
+                                   
                                   },
                                   obscureText: showPassword,
                                   decoration: InputDecoration(
@@ -218,7 +202,7 @@ void listenToNotificationStream() =>
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Color.fromRGBO(164, 190, 123, 1),
+                              backgroundColor: const Color.fromRGBO(164, 190, 123, 1),
                               textStyle: const TextStyle(
                                 fontSize: 20,
                                 color: KWihteColor,
@@ -231,7 +215,7 @@ void listenToNotificationStream() =>
                             ),
                           ),
                           onPressed: () {
-                            submitLog(user, context);
+                            submitLog(user);
 
                             //in advanced level will be used
                             //----------
@@ -260,20 +244,6 @@ void listenToNotificationStream() =>
                             // }
                           },
                         ),
-                        /* ElevatedButton(
-                          onPressed: () {
-                            Notif().getNotification(
-                                "High Temp", "you are fucked up !");
-                          },
-                          /* onPressed: () async {
-                            await notificationService.showLocalNotification(
-                                id: 0,
-                                title: "Drink Water",
-                                body: "Time to drink some water!",
-                                payload: "You just took water! Huurray!");
-                          }, */
-                          child: const Text("Drink Now"),
-                        ), */
                       ],
                     ),
                   ),
