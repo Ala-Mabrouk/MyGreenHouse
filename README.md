@@ -43,7 +43,7 @@ If you have any questions or would like to get in touch with the me, please emai
 
 Here are some screenshots of the app in action:
 
-|  |  |
+|              |              |
 |--------------|--------------|
 |![Screenshot of the app's splash screen](screenshots/splashScreen.jpg)|![Screenshot of the app's login screen](screenshots/login.jpg)|
 |![Screenshot of the app's home screen](screenshots/homeScreen1.jpg)|![Screenshot of the app's sensor data screen](screenshots/homeScreen2.jpg)|
