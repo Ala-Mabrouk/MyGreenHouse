@@ -47,7 +47,6 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.1
   flutter_local_notifications: ^13.0.0
   rxdart: ^0.27.7
-  splashscreen: ^1.3.5
   animated_splash_screen: ^1.3.0
 
 dev_dependencies:
