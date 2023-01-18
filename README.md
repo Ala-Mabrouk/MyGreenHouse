@@ -45,7 +45,7 @@ Here are some screenshots of the app in action:
 
 |  |  |
 |--------------|--------------|
-|![Screenshot of the app's splash screen](screenshots/splashScreen.jpg.jpg)|![Screenshot of the app's login screen](screenshots/login.jpg.jpg)|
+|![Screenshot of the app's splash screen](screenshots/splashScreen.jpg)|![Screenshot of the app's login screen](screenshots/login.jpg)|
 |![Screenshot of the app's home screen](screenshots/homeScreen1.jpg)|![Screenshot of the app's sensor data screen](screenshots/homeScreen2.jpg)|
 |![Screenshot of the app's device control screen](screenshots/ControlScreen.jpg)|![Screenshot of the app's StatisticsScreen](screenshots/StatisticsScreen.jpg)|
 |![Screenshot of the app's simulation ](screenshots/Web%20capture_1.jpeg)|![Screenshot of the app's simulation 2](screenshots/Web%20capture_2.jpeg)|
