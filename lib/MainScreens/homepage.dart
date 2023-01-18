@@ -32,8 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
         foregroundColor: Colors.black38,
       ),
       drawer: const SideMenu(),
-      body: Expanded(
-          child: Stack(children: [
+      body: Stack(children: [
         Image.asset(
           "assets/image4.jpeg",
           fit: BoxFit.cover,
@@ -42,58 +41,50 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         Container(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 100,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                          child: Text(
-                            "Green as always",
-                            style: GoogleFonts.lato(
-                              fontSize: 40,
-                              fontWeight: FontWeight.w900,
-                              color: const Color.fromARGB(240, 95, 140, 78),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                          child: Expanded(
-                            child: Text(
-                              "Time spent amongst trees is never wasted time.",
-                              style: GoogleFonts.lato(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w800,
-                                color: const Color.fromARGB(240, 164, 190, 123),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                    const SizedBox(
+                      height: 100,
                     ),
-                   const BaseInfo(),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      child: Text(
+                        "Green as always",
+                        style: GoogleFonts.lato(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w900,
+                          color: const Color.fromARGB(240, 95, 140, 78),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                      child: Text(
+                        "Time spent amongst trees is never wasted time.",
+                        style: GoogleFonts.lato(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          color: const Color.fromARGB(240, 164, 190, 123),
+                        ),
+                      ),
+                    ),
+                    const BaseInfo(),
                     const SizedBox(
                       height: 60,
                     ),
                     const BtnHistoStatistics()
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ])),
+      ]),
     );
   }
 }
