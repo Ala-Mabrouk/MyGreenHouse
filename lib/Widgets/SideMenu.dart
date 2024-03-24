@@ -98,7 +98,7 @@ class SideMenu extends StatelessWidget {
                           color: const Color.fromARGB(255, 10, 233, 2),
                           iconSize: 50,
                           onPressed: () => print("share what's up"),
-                          icon: const Icon(Icons.whatsapp)),
+                          icon: const Icon(Icons.message_outlined)),
                       IconButton(
                           color: const Color.fromRGBO(56, 83, 149, 1),
                           iconSize: 50,
